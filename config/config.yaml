@@ -1,0 +1,22 @@
+# Runtime parameters — loaded at start-up and passed as Graph(config=...).
+# Separate from config/agent.yaml, which is the static registration manifest and
+# carries no runtime values. A reader pointed at the manifest instead of this
+# file gets nothing back and degrades silently to built-in defaults.
+
+# Retry ceiling for the backbone's retry routing (read by the framework).
+max_retry: 3
+
+# Per-search budget in seconds for the literature source. A source that answers
+# later than this is reported as an error rather than silently accepted, so a
+# slow upstream cannot produce a report that looks complete but is not.
+timeout_s: 30
+
+# Clinical appraisal settings, forwarded to the inner workflow graph by
+# HcrC2045GraphNode._parent_config() and read by the synthesis and
+# report nodes.
+evidence:
+  # References rendered in the report's reference list.
+  max_references: 20
+  # Number of Level I / Level II studies required for each strength grade.
+  strong_evidence_min: 3
+  moderate_evidence_min: 1
